@@ -5,6 +5,7 @@ import "./App.css"
 import { useState } from "react"
 
 function App() {
+  const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -54,10 +55,24 @@ function App() {
     setTasks(newTasks)
   }
 
+  function toggleAddTaskComponent() {
+    setShowAddTask(!showAddTask)
+  }
+
+  function showAddTaskComponent() {
+    if (showAddTask) {
+      return <AddTask onAdd={addTask} />
+    }
+  }
+
   return (
     <div className="container">
-      <Header title={title} />
-      <AddTask onAdd={addTask} />
+      <Header
+        title={title}
+        toggleAddTask={toggleAddTaskComponent}
+        showAddTask={showAddTask}
+      />
+      {showAddTaskComponent()}
       <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
     </div>
   )
